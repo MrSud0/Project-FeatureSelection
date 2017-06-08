@@ -62,11 +62,14 @@ for(i in 1:length(predicted))
     cm1[2] <- cm1[2]+1
   }
   
-    
-    accuracy <<- (cm1[1]+cm1[4])/(cm1[1]+cm1[4]+cm1[3]+cm1[2])
-    cm1 <<- cm1
-    
-    
+   
+} 
+
+  accuracy <- (cm1[1]+cm1[4])/(cm1[1]+cm1[4]+cm1[3]+cm1[2])
+
+  cm1 <- cbind(cm1,rbind("accuracy",accuracy))
+  
+  return(cm1)
     
   
 }
@@ -74,4 +77,3 @@ for(i in 1:length(predicted))
   
   
   
-}

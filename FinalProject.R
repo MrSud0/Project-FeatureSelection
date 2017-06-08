@@ -3,8 +3,12 @@
 
 #Importing Libraries
 
-
-
+library(Biobase)
+library(gtools)
+library(e1071)
+library(GEOquery)
+library(pathClass)
+library(caret)
 
 
 
@@ -37,39 +41,39 @@ esetMatT[!is.finite(esetMatT)] <- 0
 
 crossValMat <- FSelection(esetMatT,genoData)
 #printing a heatmap of the selected features
-heatmap(CrossValMat)
+heatmap(crossValMat)
+heatmap(crossValMat[1:10,])
 
 #this function will take as input a transposed mat nad a factor with genoData
 #it will return the selected genes on a matrix based on the Fisher Score
 fisherMat <- FisherFS(esetMatT,genoData)
 
 #printing a heatmap of the selected features
-heatmap(FisherMat)
+heatmap(fisherMat)
+heatmap(fisherMat[1:10,])
 
 #control variable used by svm model
 control<-trainControl(method = "repeatedcv",number = 10, repeats = 3)
 
-#we create and train out a SVM model based on our crossValMat and the genoData
+#create and train out a SVM model based on our crossValMat and the genoData
 
-modelSvm1<-train(x=CrossValMat,y=genoData ,method="svmLinearWeights",trControl = control)
+modelSvm1<-train(x=crossValMat,y=genoData ,method="svmLinearWeights",trControl = control)
 
-#we create and train out a SVM model based on our fisherMat and the genoData
-modelSvm2<-train(x=FisherMat,y=genoData ,method="svmLinearWeights",trControl = control)
+#create and train out a SVM model based on our fisherMat and the genoData
+modelSvm2<-train(x=fisherMat,y=genoData ,method="svmLinearWeights",trControl = control)
 
 
 #predict data for GDS4057 using the model trained on the crossval selected data (basically testing the model with the data used to train it)
 pr <- predict(modelSvm1, newdata = esetMatT)
 #create confusion matrix and calculate accuracy 
-CMAdjusted(pr,genoData)
+cm1 <- CMAdjusted(pr,genoData)
 View(cm1)
-View(accuracy)
 
 #predict data for GDS4057 using the model trained on the Fisher Score selected data (basically testing the model with the data used to train it)
 pr2 <- predict(modelSvm2, newdata = esetMatT)
 #create confusion matrix and calculate accuracy 
-CMAdjusted(pr2,genoData)
-View(cm1)
-View(accuracy)
+cm2 <- CMAdjusted(pr2,genoData)
+View(cm2)
 
 
 ##testing the second dataset 4056 ##
@@ -84,14 +88,14 @@ esetMat2T[!is.finite(esetMat2T)] <- 0
 #predict data for GDS4056 using the model trained on the crossval selected data
 pr3 <-predict(modelSvm1, newdata = esetMat2T)
 #create confusion matrix and calculate accuracy  
-CMAdjusted(pr3,genoData)
-View(cm1)
-View(accuracy)
+cm3 <- CMAdjusted(pr3,genoData)
+View(cm3)
+
+
 ####predict data for GDS4056 using the model trained on the Fisher Score selected data
 pr4 <-predict(modelSvm2, newdata = esetMat2T)
-CMAdjusted(pr4,genoData)
-View(cm1)
-View(accuracy)
+cm4 <- CMAdjusted(pr4,genoData)
+View(cm4)
 
 #we print the names of the selected features ,crossval, so we can use them for the venn diagram
 write.table(names(crossValMat[1,]), file="mymatrix.txt", row.names=FALSE, col.names=FALSE)

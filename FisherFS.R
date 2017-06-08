@@ -36,7 +36,7 @@ tempNames <- as.matrix(names(esetMatT[1,]))
 score <- cbind(score,tempNames)
 scoreSorted <- score[mixedorder(score$score,decreasing = TRUE),]
 
-selectedMat <- scoreSorted[1:98,]
+selectedMat <- scoreSorted[1:100,]
 flag = FALSE
 
 for ( y in 1 : nrow(tempNames))
