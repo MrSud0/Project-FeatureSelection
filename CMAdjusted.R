@@ -49,16 +49,16 @@ cm1<- matrix(0,2,2 ,dimnames = list(  c("ER +", "ER -"),c("ER +" ,"ER -" ) ) )
 
 for(i in 1:length(predicted))
 {
-  if(predicted[i] == "ER (IHC): +" && predicted[i] == data[i]){
+  if(predicted[i] == "ER (IHC): +" & predicted[i] == data[i]){
     cm1[1] <- cm1[1]+1
   }
-  if(predicted[i] == "ER (IHC): +" && predicted[i] != data[i]){
+  if(predicted[i] == "ER (IHC): +" & predicted[i] != data[i]){
     cm1[3] <- cm1[3]+1
   }
-  if(predicted[i] == "ER (IHC): -" && predicted[i] == data[i]){
+  if(predicted[i] == "ER (IHC): -" & predicted[i] == data[i]){
     cm1[4] <- cm1[4]+1
   }
-  if(predicted[i] == "ER (IHC): -" && predicted[i] != data[i]){
+  if(predicted[i] == "ER (IHC): -" & predicted[i] != data[i]){
     cm1[2] <- cm1[2]+1
   }
   
