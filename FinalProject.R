@@ -5,7 +5,6 @@
 
 library(Biobase)
 library(gtools)
-library(e1071)
 library(GEOquery)
 library(pathClass)
 library(caret)
