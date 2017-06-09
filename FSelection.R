@@ -22,10 +22,10 @@ FSelection <- function (esetMatT,genoData) {
   {
     for (i in 1 :ncol(esetMatT))
     {
-      if(temp[i]==x[y] & y == 1)
+      if( y == 1 & temp[i]==x[y] )
       {selectedMat<-as.matrix(esetMatT[,i])
       break} 
-      if(temp[i]==x[y] & y != 1)
+      if( y != 1 & temp[i]==x[y] )
       {selectedMat<-cbind(selectedMat,esetMatT[,i]) 
       break}
     }

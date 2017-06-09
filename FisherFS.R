@@ -1,6 +1,6 @@
 ################Fisher Score Feature Selection on normalized data #############
 
-
+#####this function requires gtools package ######
 FisherFS<-function(esetMatT,genoData)
 {
   genoDataMat <- as.matrix(genoData)
@@ -10,6 +10,7 @@ FisherFS<-function(esetMatT,genoData)
   selectedMat <- 0
   finalMat <- 0
   scoreSorted <- 0
+  
   
   for(y in 1 : ncol(esetMatT))   
   {
@@ -27,7 +28,7 @@ FisherFS<-function(esetMatT,genoData)
     }
     
     score[y] <- ( mean(matPlus[2:length(matPlus)]) - mean(matMinus[2:length(matMinus)]))  ^ 2
-    names(score[y])
+    
   }
   
 score <- as.data.frame(score)
@@ -36,20 +37,21 @@ tempNames <- as.matrix(names(esetMatT[1,]))
 score <- cbind(score,tempNames)
 scoreSorted <- score[mixedorder(score$score,decreasing = TRUE),]
 
-selectedMat <- scoreSorted[1:98,]
+selectedMat <- scoreSorted[1:100,]
 flag = FALSE
 
-for ( y in 1 : nrow(tempNames))
+
+for ( y in 1 :  nrow(tempNames))
 {
   for (i in 1: nrow(selectedMat))
   {
-    if( tempNames[y] == selectedMat[i,2] & flag == FALSE)
+    if(flag == FALSE &tempNames[y] == selectedMat[i,2] )
      {finalMat <- esetMatT[,y]
       flag=TRUE
       break}
     if( tempNames[y] == selectedMat[i,2] ) 
     { finalMat <- cbind(finalMat,esetMatT[,y])
-    break }
+      break }
       
       
   }
