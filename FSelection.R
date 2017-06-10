@@ -15,17 +15,14 @@ FSelection <- function (esetMatT,genoData) {
   
   temp <- colnames(esetMatT)  #columns' names for if statements below
   
-  selectedMat <- 0 #this will be the selected genes matrix
+  selectedMat <- NULL #this will be the selected genes matrix
   
   #checks which genes are the important ones and creates a matrix with only those
   for( y in 1  : nrow(x))
   {
     for (i in 1 :ncol(esetMatT))
     {
-      if( y == 1 & temp[i]==x[y] )
-      {selectedMat<-as.matrix(esetMatT[,i])
-      break} 
-      if( y != 1 & temp[i]==x[y] )
+      if(temp[i]==x[y] )
       {selectedMat<-cbind(selectedMat,esetMatT[,i]) 
       break}
     }
