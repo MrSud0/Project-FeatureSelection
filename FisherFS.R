@@ -6,16 +6,16 @@ FisherFS<-function(esetMatT,genoData)
   genoDataMat <- as.matrix(genoData)
  
   
-  score <- 0
-  selectedMat <- 0
-  finalMat <- 0
-  scoreSorted <- 0
+  score <- NULL
+  selectedMat <- NULL
+  finalMat <- NULL
+  scoreSorted <- NULL
   
   
   for(y in 1 : ncol(esetMatT))   
   {
-    matPlus <- 0
-    matMinus <- 0
+    matPlus <- NULL
+    matMinus <- NULL
     
     for(i in 1 : nrow(genoDataMat))
     { 
@@ -27,7 +27,7 @@ FisherFS<-function(esetMatT,genoData)
       
     }
     
-    score[y] <- ( mean(matPlus[2:length(matPlus)]) - mean(matMinus[2:length(matMinus)]))  ^ 2
+    score[y] <- ( mean(matPlus[1:length(matPlus)]) - mean(matMinus[1:length(matMinus)]))  ^ 2
     
   }
   
@@ -38,17 +38,12 @@ score <- cbind(score,tempNames)
 scoreSorted <- score[mixedorder(score$score,decreasing = TRUE),]
 
 selectedMat <- scoreSorted[1:100,]
-flag = FALSE
 
 
 for ( y in 1 :  nrow(tempNames))
 {
   for (i in 1: nrow(selectedMat))
   {
-    if(flag == FALSE &tempNames[y] == selectedMat[i,2] )
-     {finalMat <- esetMatT[,y]
-      flag=TRUE
-      break}
     if( tempNames[y] == selectedMat[i,2] ) 
     { finalMat <- cbind(finalMat,esetMatT[,y])
       break }
