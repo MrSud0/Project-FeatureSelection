@@ -8,7 +8,7 @@ library(gtools)
 library(GEOquery)
 library(pathClass)
 library(caret)
-
+library(e1071)
 
 
 
@@ -39,17 +39,28 @@ esetMatT[!is.finite(esetMatT)] <- 0
 #it will return the selected genes on a matrix based on rfe feature selection using function crossval
 
 crossValMat <- FSelection(esetMatT,genoData)
-#printing a heatmap of the selected features
-heatmap(crossValMat)
-heatmap(crossValMat[1:10,])
+#saves the heatmap of the selected features on a jpeg file (on the working directory)
+
+jpeg(file = "heatmapCrossVal.jpeg")
+heatmap(crossValMat) 
+dev.off() 
+
+jpeg(file = "heatmapCrossValReduced.jpeg")
+heatmap(crossValMat[1:10,1:25]) 
+dev.off() 
 
 #this function will take as input a transposed mat nad a factor with genoData
 #it will return the selected genes on a matrix based on the Fisher Score
 fisherMat <- FisherFS(esetMatT,genoData)
 
 #printing a heatmap of the selected features
-heatmap(fisherMat)
-heatmap(fisherMat[1:10,])
+jpeg(file = "heatmapFisher.jpeg")
+heatmap(fisherMat)  
+dev.off() 
+
+jpeg(file = "heatmapFisherReduced.jpeg")
+heatmap(fisherMat[1:10,1:25])  
+dev.off() 
 
 #control variable used by svm model
 control<-trainControl(method = "repeatedcv",number = 10, repeats = 3)
