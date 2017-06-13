@@ -4,7 +4,7 @@ GDSdownload<-function(X)
 
 {
  
-GEOdata <<- getGEO(X,destdir=".")
+return(getGEO(X,destdir="."))
 
 
 

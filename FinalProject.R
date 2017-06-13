@@ -1,19 +1,14 @@
 ##################Project Feature Selection###########################
 
-#source("http://www.bioconductor.org/biocLite.R")
-#Importing Libraries
 
-library(Biobase)
-library(gtools)
-library(GEOquery)
-library(pathClass)
-library(caret)
-library(e1071)
+#Check/Import Libraries function
+
+DLP()
 
 
-
+GEOdata<-NULL
 #Downloads "GDSXXXX" and saves it in a global variable GEOdata
-GDSdownload("GDS4057") 
+GEOdata <- GDSdownload("GDS4057") 
 #converting GDS to express set
 eset<-GDS2eSet(GEOdata,do.log2=TRUE) 
 #we take only the samples needed
@@ -87,7 +82,9 @@ View(cm2)
 
 
 ##testing the second dataset 4056 ##
-GDSdownload("GDS4056")
+GEOdata <- NULL
+GEOdata <- GDSdownload("GDS4056")
+
 eset2<-GDS2eSet(GEOdata,do.log2=TRUE)
 genoData2<-eset2@phenoData@data$`genotype/variation`
 #we dont need to reduce the samples on this one as they dont contain unwanted values
